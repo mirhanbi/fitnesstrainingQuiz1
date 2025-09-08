@@ -61,7 +61,6 @@
                         <div><input type="radio" id="q1a3" name="q1" value="c" class="hidden"><label for="q1a3" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">특수성의 원리</label></div>
                     </div>
                 </div>
-                <!-- 질문 2 ~ 6 (생략) -->
                 <!-- 질문 2 -->
                 <div class="question-block">
                     <p class="text-lg font-bold mb-4">2. 체력 수준이 향상되면, 운동의 강도나 시간을 점차적으로 늘려주어야 한다는 원리는 무엇일까요?</p>
@@ -113,7 +112,8 @@
             <!-- 결과 표시 영역 -->
             <div id="result" class="p-6 md:p-8 text-center hidden">
                 <h2 id="result-title" class="text-2xl font-bold mb-2"></h2>
-                <p id="result-score" class="text-5xl font-bold mb-4"></p>
+                <p id="result-score" class="text-5xl font-bold mb-2"></p>
+                <p id="completion-time" class="text-lg text-gray-500 mb-4"></p>
                 <p id="result-message" class="text-gray-600 mb-6"></p>
                 
                 <div id="explanation-container" class="text-left border-t pt-4 mt-6 space-y-6"></div>
@@ -133,24 +133,23 @@
     </div>
 
     <script>
-        // --- 기존 변수 선언 (생략) ---
         const userInfoSection = document.getElementById('userInfoSection');
         const userInfoForm = document.getElementById('userInfoForm');
         const quizForm = document.getElementById('quizForm');
         const resultDiv = document.getElementById('result');
         const resultTitle = document.getElementById('result-title');
         const resultScore = document.getElementById('result-score');
+        const completionTimeDisplay = document.getElementById('completion-time');
         const resultMessage = document.getElementById('result-message');
         const explanationContainer = document.getElementById('explanation-container');
         const retryButton = document.getElementById('retryButton');
-
-        // --- 새로 추가된 변수 선언 ---
         const feedbackText = document.getElementById('feedbackText');
         const submitFeedbackButton = document.getElementById('submitFeedbackButton');
         const submitStatus = document.getElementById('submitStatus');
 
         let studentData = {};
         let finalScoreValue = 0;
+        let startTime;
 
         const correctAnswers = { q1: 'b', q2: 'a', q3: 'c', q4: 'a', q5: 'b', q6: 'a' };
         
@@ -178,6 +177,7 @@
 
             if (grade && classNum && studentNumber && studentName) {
                 studentData = { grade, classNum, studentNumber, studentName };
+                startTime = new Date().getTime(); // 퀴즈 시작 시간 기록
                 userInfoSection.classList.add('hidden');
                 quizForm.classList.remove('hidden');
             } else {
@@ -187,7 +187,16 @@
 
         quizForm.addEventListener('submit', function(event) {
             event.preventDefault(); 
-            // --- 기존 채점 로직 (생략 없음) ---
+            
+            const endTime = new Date().getTime();
+            const duration = endTime - startTime;
+            const minutes = Math.floor(duration / 60000);
+            const seconds = ((duration % 60000) / 1000).toFixed(0);
+            const completionTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            studentData.completionTime = completionTime; // 학생 데이터에 풀이 시간 추가
+            completionTimeDisplay.textContent = `풀이 시간: ${completionTime}`;
+
             let score = 0;
             const totalQuestions = Object.keys(correctAnswers).length;
             const wrongAnswers = [];
@@ -212,7 +221,6 @@
 
             finalScoreValue = Math.round((score / totalQuestions) * 100);
             
-            // --- 기존 결과 메시지 설정 (생략 없음) ---
             let message = '';
             let title = '';
             if (finalScoreValue === 100) {
@@ -235,7 +243,6 @@
 
             explanationContainer.innerHTML = '';
             if (wrongAnswers.length > 0) {
-                // ... 기존 오답노트 로직 (생략) ...
                 const explanationTitle = document.createElement('h3');
                 explanationTitle.className = 'text-xl font-bold text-center mb-4';
                 explanationTitle.textContent = '📝 다시 확인해 봐요!';
@@ -262,7 +269,6 @@
             resultDiv.classList.remove('hidden');
         });
 
-        // --- 새로 추가된 소감문 전송 이벤트 ---
         submitFeedbackButton.addEventListener('click', function() {
             const feedback = feedbackText.value.trim();
             if (feedback === "") {
@@ -285,7 +291,7 @@
 
             fetch(SCRIPT_URL, {
                 method: 'POST',
-                mode: 'no-cors', // 구글 앱스 스크립트로 보낼 때 필요
+                mode: 'no-cors',
                 cache: 'no-cache',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dataToSend)
