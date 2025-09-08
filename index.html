@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOAi-情 프로젝트: 체력 증진 원리 퀴즈</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        input[type="radio"]:checked + label {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen py-8">
+    <div class="container mx-auto p-4 md:p-8 max-w-2xl">
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <!-- 퀴즈 헤더 -->
+            <div class="p-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+                <h1 class="text-3xl font-bold text-center">YOAi-情 체력 원리 및 요소 퀴즈</h1>
+                <p class="text-center mt-2">오늘 배운 내용을 확인해 보세요!</p>
+            </div>
+
+            <!-- 사용자 정보 입력 폼 -->
+            <div id="userInfoSection" class="p-6 md:p-8">
+                <form id="userInfoForm" class="space-y-4">
+                    <h2 class="text-xl font-bold text-center text-gray-700 mb-6">퀴즈를 시작하기 전에 정보를 입력해주세요.</h2>
+                    <div>
+                        <label for="grade" class="block text-sm font-medium text-gray-700">학년</label>
+                        <input type="number" id="grade" name="grade" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="classNum" class="block text-sm font-medium text-gray-700">반</label>
+                        <input type="number" id="classNum" name="classNum" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="studentNumber" class="block text-sm font-medium text-gray-700">번호</label>
+                        <input type="number" id="studentNumber" name="studentNumber" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="studentName" class="block text-sm font-medium text-gray-700">이름</label>
+                        <input type="text" id="studentName" name="studentName" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                    <button type="submit" class="w-full mt-4 bg-blue-500 text-white font-bold py-3 rounded-lg hover:bg-blue-600 transition-transform transform hover:scale-105">퀴즈 시작하기</button>
+                </form>
+            </div>
+
+            <!-- 퀴즈 폼 (초기에는 숨김) -->
+            <form id="quizForm" class="p-6 md:p-8 space-y-8 hidden">
+                 <!-- 질문 1 -->
+                <div class="question-block">
+                    <p class="text-lg font-bold mb-4">1. 일상생활에서 받는 자극보다 더 강한 자극을 주어야 신체 기능이 향상된다는 원리는 무엇일까요?</p>
+                    <div class="space-y-3">
+                        <div><input type="radio" id="q1a1" name="q1" value="a" class="hidden"><label for="q1a1" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">점진성의 원리</label></div>
+                        <div><input type="radio" id="q1a2" name="q1" value="b" class="hidden"><label for="q1a2" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">과부하의 원리</label></div>
+                        <div><input type="radio" id="q1a3" name="q1" value="c" class="hidden"><label for="q1a3" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">특수성의 원리</label></div>
+                    </div>
+                </div>
+                <!-- 질문 2 ~ 6 (생략) -->
+                <!-- 질문 2 -->
+                <div class="question-block">
+                    <p class="text-lg font-bold mb-4">2. 체력 수준이 향상되면, 운동의 강도나 시간을 점차적으로 늘려주어야 한다는 원리는 무엇일까요?</p>
+                    <div class="space-y-3">
+                        <div><input type="radio" id="q2a1" name="q2" value="a" class="hidden"><label for="q2a1" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">점진성의 원리</label></div>
+                        <div><input type="radio" id="q2a2" name="q2" value="b" class="hidden"><label for="q2a2" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">과부하의 원리</label></div>
+                        <div><input type="radio" id="q2a3" name="q2" value="c" class="hidden"><label for="q2a3" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">특수성의 원리</label></div>
+                    </div>
+                </div>
+                <!-- 질문 3 -->
+                <div class="question-block">
+                    <p class="text-lg font-bold mb-4">3. 심폐지구력을 기르기 위해 달리기를 하는 것처럼, 기르고자 하는 체력에 맞는 특정 운동을 해야 효과가 있다는 원리는 무엇일까요?</p>
+                    <div class="space-y-3">
+                        <div><input type="radio" id="q3a1" name="q3" value="a" class="hidden"><label for="q3a1" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">점진성의 원리</label></div>
+                        <div><input type="radio" id="q3a2" name="q3" value="b" class="hidden"><label for="q3a2" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">과부하의 원리</label></div>
+                        <div><input type="radio" id="q3a3" name="q3" value="c" class="hidden"><label for="q3a3" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">특수성의 원리</label></div>
+                    </div>
+                </div>
+                 <!-- 질문 4 -->
+                 <div class="question-block">
+                    <p class="text-lg font-bold mb-4">4. 턱걸이를 하나도 못하던 학생이 매달리기부터 시작해서, 이제는 3개를 할 수 있게 되었습니다. 이 학생이 5개를 목표로 훈련 강도를 높이려고 할 때, 가장 고려해야 할 원리는 무엇일까요?</p>
+                    <div class="space-y-3">
+                        <div><input type="radio" id="q4a1" name="q4" value="a" class="hidden"><label for="q4a1" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">점진성의 원리</label></div>
+                        <div><input type="radio" id="q4a2" name="q4" value="b" class="hidden"><label for="q4a2" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">다양성의 원리</label></div>
+                        <div><input type="radio" id="q4a3" name="q4" value="c" class="hidden"><label for="q4a3" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">특수성의 원리</label></div>
+                    </div>
+                </div>
+                <!-- 질문 5 -->
+                <div class="question-block">
+                    <p class="text-lg font-bold mb-4">5. 오래 달리기를 통해 주로 기를 수 있는 **건강 체력** 요소는 무엇일까요?</p>
+                    <div class="space-y-3">
+                        <div><input type="radio" id="q5a1" name="q5" value="a" class="hidden"><label for="q5a1" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">순발력</label></div>
+                        <div><input type="radio" id="q5a2" name="q5" value="b" class="hidden"><label for="q5a2" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">심폐지구력</label></div>
+                        <div><input type="radio" id="q5a3" name="q5" value="c" class="hidden"><label for="q5a3" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">유연성</label></div>
+                    </div>
+                </div>
+                <!-- 질문 6 -->
+                <div class="question-block">
+                    <p class="text-lg font-bold mb-4">6. 다음 중, 폭발적인 힘을 순간적으로 내는 능력과 관련이 깊은 **운동 체력** 요소는 무엇일까요?</p>
+                    <div class="space-y-3">
+                        <div><input type="radio" id="q6a1" name="q6" value="a" class="hidden"><label for="q6a1" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">순발력</label></div>
+                        <div><input type="radio" id="q6a2" name="q6" value="b" class="hidden"><label for="q6a2" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">근지구력</label></div>
+                        <div><input type="radio" id="q6a3" name="q6" value="c" class="hidden"><label for="q6a3" class="block w-full text-center p-3 rounded-lg border border-gray-300 cursor-pointer hover:bg-gray-200 transition-colors">평형성</label></div>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-green-500 text-white font-bold py-3 rounded-lg hover:bg-green-600 transition-transform transform hover:scale-105">결과 확인하기</button>
+            </form>
+
+            <!-- 결과 표시 영역 -->
+            <div id="result" class="p-6 md:p-8 text-center hidden">
+                <h2 id="result-title" class="text-2xl font-bold mb-2"></h2>
+                <p id="result-score" class="text-5xl font-bold mb-4"></p>
+                <p id="result-message" class="text-gray-600 mb-6"></p>
+                
+                <div id="explanation-container" class="text-left border-t pt-4 mt-6 space-y-6"></div>
+
+                <!-- 소감문 및 전송 영역 -->
+                <div id="feedbackSection" class="mt-8 text-left border-t pt-6">
+                    <h3 class="text-xl font-bold text-center mb-4">📝 수업 소감문 작성</h3>
+                    <p class="text-center text-sm text-gray-500 mb-4">오늘 퀴즈와 수업을 통해 배우고 느낀 점을 자유롭게 적어주세요.</p>
+                    <textarea id="feedbackText" class="w-full h-24 p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="여기에 소감문을 입력하세요..."></textarea>
+                    <button id="submitFeedbackButton" class="w-full mt-4 bg-purple-600 text-white font-bold py-3 rounded-lg hover:bg-purple-700 transition-colors">소감문 전송하기</button>
+                    <p id="submitStatus" class="text-center text-sm mt-2 text-green-600"></p>
+                </div>
+
+                <button id="retryButton" class="w-full mt-4 bg-gray-500 text-white font-bold py-3 rounded-lg hover:bg-gray-600 transition-transform transform hover:scale-105">다시 풀기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 기존 변수 선언 (생략) ---
+        const userInfoSection = document.getElementById('userInfoSection');
+        const userInfoForm = document.getElementById('userInfoForm');
+        const quizForm = document.getElementById('quizForm');
+        const resultDiv = document.getElementById('result');
+        const resultTitle = document.getElementById('result-title');
+        const resultScore = document.getElementById('result-score');
+        const resultMessage = document.getElementById('result-message');
+        const explanationContainer = document.getElementById('explanation-container');
+        const retryButton = document.getElementById('retryButton');
+
+        // --- 새로 추가된 변수 선언 ---
+        const feedbackText = document.getElementById('feedbackText');
+        const submitFeedbackButton = document.getElementById('submitFeedbackButton');
+        const submitStatus = document.getElementById('submitStatus');
+
+        let studentData = {};
+        let finalScoreValue = 0;
+
+        const correctAnswers = { q1: 'b', q2: 'a', q3: 'c', q4: 'a', q5: 'b', q6: 'a' };
+        
+        const explanations = {
+            q1: { question: "1. 일상생활보다 강한 자극을 주어야 기능이 향상된다는 원리는?", answer: "과부하의 원리", text: "우리 몸은 익숙한 자극에 적응하기 때문에, 체력을 키우려면 평소보다 더 강한 자극(과부하)을 주어야 합니다." },
+            q2: { question: "2. 체력 수준이 향상되면 운동 강도를 점차 늘려야 한다는 원리는?", answer: "점진성의 원리", text: "몸이 적응할 시간을 주면서 운동 강도를 서서히 높여야 부상을 예방하고 꾸준히 성장할 수 있습니다." },
+            q3: { question: "3. 기르고자 하는 체력에 맞는 특정 운동을 해야 효과가 있다는 원리는?", answer: "특수성의 원리", text: "운동 효과는 사용한 신체 부위나 움직임에 한정되어 나타납니다. 즉, 근력을 키우고 싶다면 근력 운동을 해야 합니다." },
+            q4: { question: "4. 턱걸이 3개를 할 수 있게 된 학생이 5개를 목표로 할 때 가장 고려해야 할 원리는?", answer: "점진성의 원리", text: "이미 3개를 할 수 있게 된 상태에서 목표를 향해 무리하지 않고 서서히 강도를 높여가는 것이 중요하므로 점진성의 원리가 가장 중요합니다." },
+            q5: { question: "5. 오래 달리기를 통해 주로 기를 수 있는 건강 체력 요소는?", answer: "심폐지구력", text: "오래 달리기는 심장과 폐의 기능을 향상시켜 오랫동안 지치지 않고 운동을 계속할 수 있는 능력인 심폐지구력을 키우는 대표적인 운동입니다." },
+            q6: { question: "6. 폭발적인 힘을 순간적으로 내는 능력과 관련 깊은 운동 체력 요소는?", answer: "순발력", text: "순발력은 짧은 시간에 최대한의 힘을 발휘하는 능력으로, 멀리뛰기, 단거리 달리기 등에서 중요한 운동 체력 요소입니다." }
+        };
+
+        function getLabelText(questionName, value) {
+            if (!value) return "미선택";
+            const radio = document.querySelector(`input[name="${questionName}"][value="${value}"]`);
+            return radio ? radio.nextElementSibling.textContent : "미선택";
+        }
+        
+        userInfoForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const grade = document.getElementById('grade').value;
+            const classNum = document.getElementById('classNum').value;
+            const studentNumber = document.getElementById('studentNumber').value;
+            const studentName = document.getElementById('studentName').value;
+
+            if (grade && classNum && studentNumber && studentName) {
+                studentData = { grade, classNum, studentNumber, studentName };
+                userInfoSection.classList.add('hidden');
+                quizForm.classList.remove('hidden');
+            } else {
+                alert('모든 정보를 입력해주세요!');
+            }
+        });
+
+        quizForm.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            // --- 기존 채점 로직 (생략 없음) ---
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+            const wrongAnswers = [];
+
+            const userAnswers = {
+                q1: quizForm.q1.value, q2: quizForm.q2.value, q3: quizForm.q3.value,
+                q4: quizForm.q4.value, q5: quizForm.q5.value, q6: quizForm.q6.value,
+            };
+            
+            if (!userAnswers.q1 || !userAnswers.q2 || !userAnswers.q3 || !userAnswers.q4 || !userAnswers.q5 || !userAnswers.q6) {
+                alert('모든 질문에 답해주세요!');
+                return;
+            }
+
+            for (const question in userAnswers) {
+                if (userAnswers[question] === correctAnswers[question]) {
+                    score++;
+                } else {
+                    wrongAnswers.push(question);
+                }
+            }
+
+            finalScoreValue = Math.round((score / totalQuestions) * 100);
+            
+            // --- 기존 결과 메시지 설정 (생략 없음) ---
+            let message = '';
+            let title = '';
+            if (finalScoreValue === 100) {
+                title = '완벽해요! 💯';
+                message = '체력 원리와 요소를 정확히 이해하고 있네요! 당신은 체력 박사!';
+            } else if (finalScoreValue >= 75) {
+                title = '훌륭해요! 👍';
+                message = '아주 잘했어요! 조금만 더 복습하면 완벽할 거예요.';
+            } else if (finalScoreValue >= 50) {
+                title = '잘했어요! 😊';
+                message = '기본 개념을 잘 이해하고 있어요. 헷갈렸던 부분만 다시 확인해 봐요.';
+            } else {
+                title = '아쉬워요! 🙁';
+                message = '괜찮아요! 오늘 배운 내용을 다시 한번 천천히 복습해 봅시다.';
+            }
+
+            resultTitle.textContent = title;
+            resultScore.textContent = `${finalScoreValue}점`;
+            resultMessage.textContent = message;
+
+            explanationContainer.innerHTML = '';
+            if (wrongAnswers.length > 0) {
+                // ... 기존 오답노트 로직 (생략) ...
+                const explanationTitle = document.createElement('h3');
+                explanationTitle.className = 'text-xl font-bold text-center mb-4';
+                explanationTitle.textContent = '📝 다시 확인해 봐요!';
+                explanationContainer.appendChild(explanationTitle);
+
+                wrongAnswers.forEach(qKey => {
+                    const explanationData = explanations[qKey];
+                    const userAnswerText = getLabelText(qKey, userAnswers[qKey]);
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'p-4 bg-gray-50 rounded-lg border';
+                    
+                    wrapper.innerHTML = `
+                        <p class="font-bold text-gray-800">${explanationData.question}</p>
+                        <p class="mt-2 text-sm">🤔 나의 선택: <span class="text-red-500 font-semibold">${userAnswerText}</span></p>
+                        <p class="mt-1 text-sm">💡 정답: <span class="text-blue-500 font-semibold">${explanationData.answer}</span></p>
+                        <p class="mt-2 text-xs text-gray-600 bg-gray-100 p-2 rounded-md">${explanationData.text}</p>
+                    `;
+                    explanationContainer.appendChild(wrapper);
+                });
+            }
+
+            quizForm.classList.add('hidden');
+            resultDiv.classList.remove('hidden');
+        });
+
+        // --- 새로 추가된 소감문 전송 이벤트 ---
+        submitFeedbackButton.addEventListener('click', function() {
+            const feedback = feedbackText.value.trim();
+            if (feedback === "") {
+                alert("소감문을 입력해주세요.");
+                return;
+            }
+
+            const dataToSend = {
+                ...studentData,
+                score: finalScoreValue,
+                feedback: feedback
+            };
+
+            // !!! 중요 !!! 아래 URL을 선생님의 구글 앱스 스크립트 URL로 교체해주세요.
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyT4gNxy7eFFo2suUamOjXN996VlICmzWzyvJvpMxcXl7J_BvFGxz4WAcjgvizfX8WroA/exec";
+
+            submitFeedbackButton.disabled = true;
+            submitFeedbackButton.textContent = "전송 중...";
+            submitStatus.textContent = "";
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', // 구글 앱스 스크립트로 보낼 때 필요
+                cache: 'no-cache',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dataToSend)
+            })
+            .then(response => {
+                submitFeedbackButton.textContent = "전송 완료 ✅";
+                feedbackText.disabled = true;
+                submitStatus.textContent = "소중한 의견 감사합니다! 성공적으로 제출되었습니다.";
+            })
+            .catch(error => {
+                submitFeedbackButton.disabled = false;
+                submitFeedbackButton.textContent = "소감문 전송하기";
+                submitStatus.textContent = "전송 중 오류가 발생했습니다. 다시 시도해주세요.";
+                console.error('Error:', error);
+            });
+        });
+
+        retryButton.addEventListener('click', function() {
+            resultDiv.classList.add('hidden');
+            userInfoSection.classList.remove('hidden');
+            quizForm.reset();
+            feedbackText.value = "";
+            feedbackText.disabled = false;
+            submitFeedbackButton.disabled = false;
+            submitFeedbackButton.textContent = "소감문 전송하기";
+            submitStatus.textContent = "";
+            explanationContainer.innerHTML = '';
+        });
+    </script>
+</body>
+</html>
+
